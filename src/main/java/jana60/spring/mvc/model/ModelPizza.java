@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pizza")
@@ -15,8 +18,14 @@ public class ModelPizza {
 	@Column(name = "id")
 	private Integer id;
 
+	@NotEmpty(message = "Il nome e' obbliogatorio")
+	@Column(nullable = false)
 	private String nome;
+
 	private String descrizione;
+
+	@NotNull
+	@Min(1)
 	private Double prezzo;
 
 	public Integer getId() {
@@ -52,7 +61,7 @@ public class ModelPizza {
 	}
 
 	public String getPrezzoFormattato() {
-		return prezzo + "€";
+		return prezzo + "" + "€";
 	}
 
 }

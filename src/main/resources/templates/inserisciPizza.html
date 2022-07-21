@@ -12,18 +12,43 @@
    th:object="${pizza}"
    th:action="@{/inserisciPizza}"
    method="POST"
+   class=" m-auto"
    >
-  <div class="row">
-    <div class="col">
-      <input type="text" id="nome" class="form-control" th:field="*{nome}"  placeholder="First name">
+   <ul>
+    <li 
+       th:each="err : ${#fields.allErrors()}" 
+       th:text="${err}">
+    </li>
+</ul>
+  <div class="row m-auto text-center">
+    <div class="mb-3 col-3">
+      <input type="text" id="nome" class="form-control" th:field="*{nome}"  placeholder="Nome Pizza" th:errorClass="is-invalid">
+      <div th:if="${#fields.hasErrors('nome')}" class="invalid-feedback">
+        <ul>
+          <li th:each="err : ${#fields.errors('nome')}" th:text="${err}">
+        </ul>
+      </div>
     </div>
-    <div class="col">
-      <input type="text" id="descrizione" class="form-control" th:field="*{descrizione}" placeholder="Last name">
+    <div class="mb-3 col-3">
+      <input type="text" id="descrizione" class="form-control" th:field="*{descrizione}" placeholder="Descrizione" th:errorClass="is-invalid">
+      <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
+        <ul>
+          <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}">
+        </ul>
+      </div>
     </div>
-    <div>
-  				<button type="submit" class="btn btn-primary">Save</button>
-  				<a class="btn btn-danger" href="/">Cancel</a>
-  			</div>
+    <div class="mb-3 col-3">
+      <input type="number" step="0.1" id="prezzo" class="form-control" th:field="*{prezzo}" placeholder="Prezzo" th:errorClass="is-invalid">
+      <div th:if="${#fields.hasErrors('prezzo')}" class="invalid-feedback">
+        <ul>
+          <li th:each="err : ${#fields.errors('prezzo')}" th:text="${err}">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3 ml-5">
+  	<button type="submit" class="btn btn-primary">Save</button>
+  	<a class="btn btn-danger" href="/">Cancel</a>
   </div>
 </form>
 </html>		
