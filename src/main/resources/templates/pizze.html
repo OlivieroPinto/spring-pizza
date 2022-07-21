@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>	
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		 <th:block th:replace="fragment :: head"></th:block>
+	</head>
+	<div><th:block th:replace="fragment :: navbar"></th:block></div>
+	
+<h1>Ecco le nostre pizze: </h1>
+    <div th:if="${#lists.isEmpty(listaPizze)}">
+        <h1>Spiacenti, non e' disponibile una lista di pizze</h1>
+      </div>
+      <div th:unless="${#lists.isEmpty(listaPizze)}">
+
+
+<hr/>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Nome</th>				
+					<th>Descrizione</th>
+					<th>Prezzo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="p : ${listaPizze}">
+				    <td th:text="${p.nome}"></td>
+					<td th:text="${p.descrizione}"></td>					
+					<td th:text="${p.getPrezzoFormattato}"></td>					
+				</tr>
+			</tbody>
+		</table>
+</html>		
+		

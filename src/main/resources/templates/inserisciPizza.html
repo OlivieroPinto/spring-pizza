@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>	
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		 <th:block th:replace="fragment :: head"></th:block>
+	</head>
+	<div><th:block th:replace="fragment :: navbar"></th:block></div>
+
+
+<hr/>
+	<form
+   id = "form-pizza"
+   th:object="${pizza}"
+   th:action="@{/inserisciPizza}"
+   method="POST"
+   >
+  <div class="row">
+    <div class="col">
+      <input type="text" id="nome" class="form-control" th:field="*{nome}"  placeholder="First name">
+    </div>
+    <div class="col">
+      <input type="text" id="descrizione" class="form-control" th:field="*{descrizione}" placeholder="Last name">
+    </div>
+    <div>
+  				<button type="submit" class="btn btn-primary">Save</button>
+  				<a class="btn btn-danger" href="/">Cancel</a>
+  			</div>
+  </div>
+</form>
+</html>		
+		
