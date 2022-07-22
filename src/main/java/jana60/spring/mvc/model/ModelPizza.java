@@ -25,7 +25,7 @@ public class ModelPizza {
 	private String descrizione;
 
 	@NotNull
-	@Min(1)
+	@Min(value = 1)
 	private Double prezzo;
 
 	public Integer getId() {

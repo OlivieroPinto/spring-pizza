@@ -25,7 +25,12 @@
 				<tr th:each="p : ${listaPizze}">
 				    <td th:text="${p.nome}"></td>
 					<td th:text="${p.descrizione}"></td>					
-					<td th:text="${p.getPrezzoFormattato}"></td>					
+					<td th:text="${p.getPrezzoFormattato}"></td>
+					<td><a class="btn btn-danger" th:href="@{|/cancella/${p.id}|}" title="Delete" onclick="return confirm('Are your sure?')">
+					<i class="fa-solid fa-trash-can"></i>
+					<a class="btn btn-primary" th:href="@{|/modificaPizza/${p.id}|}" title="Edit">
+	  					<i class="fa-solid fa-pen-to-square"></i>
+	  				</a></td>				
 				</tr>
 			</tbody>
 		</table>
