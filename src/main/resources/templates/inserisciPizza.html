@@ -45,11 +45,18 @@
         </ul>
       </div>
     </div>
-  </div>
-  <div class="mb-3 ml-5">
+	  <div class="mb-3 ml-5">
   	<button type="submit" class="btn btn-primary">Save</button>
   	<a class="btn btn-danger" href="/">Cancel</a>
   </div>
+  	<div class="col-4">
+				<h4>Ingredienti</h4>
+				<div class="form-check" th:each="i : ${listaIngrediente}">
+				  <input class="form-check-input" th:field="*{nome}" type="checkbox" th:id="|ingrediente_${i.id}|" th:value="${i.id}">
+				  <label class="form-check-label" th:for="|ingrediente_${i.id}|" th:text="${i.nome}"></label>
+				</div>
+				
+			</div>
 </form>
 </html>		
 		

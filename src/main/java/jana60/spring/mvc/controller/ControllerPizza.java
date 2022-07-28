@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jana60.spring.mvc.model.ModelIngrediente;
 import jana60.spring.mvc.model.ModelPizza;
+import jana60.spring.mvc.repository.RepositoryIngredienti;
 import jana60.spring.mvc.repository.RepositoryPizza;
 
 @Controller
@@ -26,6 +28,8 @@ import jana60.spring.mvc.repository.RepositoryPizza;
 public class ControllerPizza {
 	@Autowired
 	private RepositoryPizza repo;
+	@Autowired
+	private RepositoryIngredienti ingredientiRepo;
 
 	@GetMapping("/home")
 	public String home() {
@@ -35,13 +39,16 @@ public class ControllerPizza {
 	@GetMapping("/pizze")
 	public String pizze(Model model) {
 		List<ModelPizza> listaPizze = (List<ModelPizza>) repo.findAll();
+		List<ModelIngrediente> listaIngrediente = (List<ModelIngrediente>) ingredientiRepo.findAll();
 		model.addAttribute("listaPizze", listaPizze);
+		model.addAttribute("listaIngrediente", listaIngrediente);
 		return "pizze";
 	}
 
 	@GetMapping("/inserisciPizza")
 	public String pizzaForm(Model model) {
 		model.addAttribute("pizza", new ModelPizza());
+		model.addAttribute("listaIngrediente", ingredientiRepo.findAll());
 		return "inserisciPizza";
 	}
 
@@ -51,7 +58,24 @@ public class ControllerPizza {
 			return "/";
 		} else {
 			repo.save(formPizza);
-			return "redirect:/home";
+			return "redirect:/inserisciPizza";
+		}
+	}
+
+	@GetMapping("/inserisciIngrediente")
+	public String ingredienteForm(Model model) {
+		model.addAttribute("ingrediente", new ModelIngrediente());
+		model.addAttribute("listaIngrediente", ingredientiRepo.findAll());
+		return "inserisciIngrediente";
+	}
+
+	@PostMapping("/inserisciIngrediente")
+	public String save(@Valid @ModelAttribute("ingrediente") ModelIngrediente formIngrediente, BindingResult br) {
+		if (br.hasErrors()) {
+			return "/";
+		} else {
+			ingredientiRepo.save(formIngrediente);
+			return "redirect:/inserisciIngrediente";
 		}
 	}
 
@@ -59,7 +83,6 @@ public class ControllerPizza {
 	public String delete(@PathVariable("id") Integer pizzaId, RedirectAttributes ra) {
 		Optional<ModelPizza> result = repo.findById(pizzaId);
 		if (result.isPresent()) {
-			// repo.deleteById(bookId);
 			repo.delete(result.get());
 			ra.addFlashAttribute("successMessage", "Pizza " + result.get().getNome() + " deleted!");
 			return "/home";
@@ -70,11 +93,12 @@ public class ControllerPizza {
 	}
 
 	@GetMapping("/modificaPizza/{id}")
-	public String edit(@PathVariable("id") Integer pizzaId, Model model) {
+	public String edit(@PathVariable("id") Integer pizzaId, Model model, @PathVariable("id") Integer ingredienteId) {
 		Optional<ModelPizza> result = repo.findById(pizzaId);
-		// controllo se il Book con quell'id è presente
+		Optional<ModelIngrediente> resultIngredienti = ingredientiRepo.findById(ingredienteId);
 		if (result.isPresent()) {
 			model.addAttribute("pizza", result.get());
+			model.addAttribute("listaIngrediente", resultIngredienti.get());
 			return "inserisciPizza";
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book con id " + pizzaId + " not present");

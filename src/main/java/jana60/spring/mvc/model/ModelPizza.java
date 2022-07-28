@@ -1,10 +1,13 @@
 package jana60.spring.mvc.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -27,6 +30,9 @@ public class ModelPizza {
 	@NotNull
 	@Min(value = 1)
 	private Double prezzo;
+
+	@ManyToMany
+	List<ModelIngrediente> ingredienti;
 
 	public Integer getId() {
 		return id;
@@ -62,6 +68,14 @@ public class ModelPizza {
 
 	public String getPrezzoFormattato() {
 		return prezzo + "" + "€";
+	}
+
+	public List<ModelIngrediente> getIngredienti() {
+		return ingredienti;
+	}
+
+	public void setIngredienti(List<ModelIngrediente> ingredienti) {
+		this.ingredienti = ingredienti;
 	}
 
 }
