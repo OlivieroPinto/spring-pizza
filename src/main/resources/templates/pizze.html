@@ -28,6 +28,9 @@
 				    <td th:text="${p.nome}"></td>
 					<td th:text="${p.descrizione}"></td>					
 					<td th:text="${p.getPrezzoFormattato}"></td>
+						<td >
+							<span th:each="i : ${p.ingredienti}" th:text="|${i.nome}, |"></span>
+						</td>
 						
 					<td><a class="btn btn-danger" th:href="@{|/cancella/${p.id}|}" title="Delete" onclick="return confirm('Are your sure?')">
 					<i class="fa-solid fa-trash-can"></i>
@@ -35,9 +38,7 @@
 	  					<i class="fa-solid fa-pen-to-square"></i>
 	  				</a>
 	  				</td>
-	  				<tr th:each="i : ${listaIngrediente}">
-							<td th:text="${i.nome}"></td>
-						</tr>				
+	  							
 				</tr>
 			</tbody>
 		</table>

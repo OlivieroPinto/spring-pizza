@@ -39,9 +39,10 @@ public class ControllerPizza {
 	@GetMapping("/pizze")
 	public String pizze(Model model) {
 		List<ModelPizza> listaPizze = (List<ModelPizza>) repo.findAll();
-		List<ModelIngrediente> listaIngrediente = (List<ModelIngrediente>) ingredientiRepo.findAll();
+		// List<ModelIngrediente> listaIngrediente = (List<ModelIngrediente>)
+		// ingredientiRepo.findAll();
 		model.addAttribute("listaPizze", listaPizze);
-		model.addAttribute("listaIngrediente", listaIngrediente);
+		// model.addAttribute("listaIngrediente", listaIngrediente);
 		return "pizze";
 	}
 
